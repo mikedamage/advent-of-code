@@ -1,0 +1,12 @@
+{
+  "name": "advent-of-code",
+  "version": "0.1.0",
+  "author": {
+    "name": "Mike Green",
+    "email": "mike.is.green@gmail.com"
+  },
+  "private": true,
+  "dependencies": {
+    "lodash": "^3.10.1"
+  }
+}
