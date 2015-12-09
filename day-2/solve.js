@@ -24,7 +24,9 @@ export class Tabulator extends Parser {
 
   _getSurfaceArea(str) {
     let [len, width, height] = this._parseDimensions(str);
-    return (2 * len * width) + (2 * width * height) + (2 * height * len);
+    let sortedSides = _.sortBy([ len, width, height ]);
+    let extraArea   = sortedSides[0] * sortedSides[1];
+    return (2 * len * width) + (2 * width * height) + (2 * height * len) + extraArea;
   }
 
   _parseDimensions(str) {
