@@ -8,7 +8,7 @@ The scripts in this repository are solutions to the problems presented on [Adven
 
 ## Setup
 
-_These solutions require [Node.js](http://nodejs.org)._
+First, make sure that you have [Node.js](http://nodejs.org) installed, then run the following:
 
 ```bash
 git clone https://github.com/mikedamage/advent-of-code.git
