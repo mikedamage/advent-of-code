@@ -1,15 +1,11 @@
-import _            from 'lodash';
-import fs           from 'fs';
-import yargs        from 'yargs';
-import path         from 'path';
-import EventEmitter from 'events';
+import _        from 'lodash';
+import fs       from 'fs';
+import path     from 'path';
+import {Parser} from '../lib/parser';
 
-const argv = yargs.argv;
-
-export class Elevator extends EventEmitter {
+export class Elevator extends Parser {
   constructor(input) {
-    super();
-    this.input = _.isString(input) ? input : '';
+    super(input);
     this.floor = 0;
   }
 
