@@ -16,5 +16,5 @@ cd advent-of-code
 npm install
 
 # Run a solution with run.js:
-./run.js ./day-1/solve ./day-1/input.txt
+./run.js day-1 ./day-1/input.txt
 ```
