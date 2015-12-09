@@ -45,7 +45,7 @@ export default {
     let input           = fs.readFileSync(path.resolve(inputFile));
     let lift            = new Elevator(input.toString());
 
-    lift.addListener('floorChange', function(old, cur, chr, pos) {
+    lift.addListener('floorChange', (old, cur, chr, pos) => {
       if (!enteredBasement && cur < 0) {
         enteredBasement = true;
         console.log('Entered basement at position %d', (pos + 1));
