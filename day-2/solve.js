@@ -3,42 +3,61 @@ import fs       from 'fs';
 import path     from 'path';
 import {Parser} from '../lib/parser';
 
-export class Tabulator extends Parser {
+export class Presents extends Parser {
   constructor(input) {
     super(input);
-    this.total = 0;
-    this.lines = this.input.split("\n");
+    this.paper  = 0;
+    this.ribbon = 0;
+    this.bow    = 0;
+    this.lines  = this.input.split("\n");
   }
 
   reset() {
-    this.total = 0;
+    this.paper  = 0;
+    this.ribbon = 0;
+    this.bow    = 0;
   }
 
   parse() {
-    this.reset();
+    super.parse();
 
-    this.total = _.reduce(this.lines, (total, line, lineNo) => {
-      return total + this._getSurfaceArea(line);
-    }, 0);
-  }
+    _.forEach(this.lines, (line, lineNo) => {
+      let dims = this._parseDimensions(line);
 
-  _getSurfaceArea(str) {
-    let [len, width, height] = this._parseDimensions(str);
-    let sortedSides = _.sortBy([ len, width, height ]);
-    let extraArea   = sortedSides[0] * sortedSides[1];
-    return (2 * len * width) + (2 * width * height) + (2 * height * len) + extraArea;
+      this.paper  += this._getSurfaceArea(dims);
+      this.ribbon += this._getSmallestPerimeter(dims);
+      this.bow    += this._getVolume(dims);
+    });
   }
 
   _parseDimensions(str) {
     let parts = str.trim().split('x');
     return _.map(parts, part => parseInt(part, 10));
   }
+
+  _getSmallestPerimeter(dims) {
+    let [len, width, height] = dims;
+    let sortedSides = _.sortBy(dims);
+    return (2 * sortedSides[0]) + (2 * sortedSides[1]);
+  }
+
+  _getSurfaceArea(dims) {
+    let [len, width, height] = dims;
+    let sortedSides = _.sortBy(dims)
+    let extraArea   = sortedSides[0] * sortedSides[1];
+    return (2 * len * width) + (2 * width * height) + (2 * height * len) + extraArea;
+  }
+
+  _getVolume(dims) {
+    return _.reduce(dims, (total, dim) => total * dim, 1);
+  }
 }
 
 export default {
   run: function(inputFile) {
-    let tab = new Tabulator(fs.readFileSync(path.resolve(inputFile)).toString());
+    let tab = new Presents(fs.readFileSync(path.resolve(inputFile)).toString());
     tab.parse();
-    console.log('Total Square Feet: %d', tab.total);
+    console.log('Total square feet of wrapping paper: %d', tab.paper);
+    console.log('Total feet of ribbon: %d', tab.ribbon + tab.bow);
   }
 }
